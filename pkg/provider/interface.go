@@ -29,6 +29,8 @@ import (
 	"github.com/deb-sig/double-entry-generator/pkg/provider/htsec"
 	"github.com/deb-sig/double-entry-generator/pkg/provider/huobi"
 	"github.com/deb-sig/double-entry-generator/pkg/provider/wechat"
+
+	"github.com/deb-sig/double-entry-generator/pkg/provider/jd"
 )
 
 // Interface is the interface for the provider.
@@ -53,6 +55,8 @@ func New(name string) (Interface, error) {
 		return td.New(), nil
 	case consts.ProviderBmo:
 		return bmo.New(), nil
+	case consts.ProviderJd:
+		return jd.New(), nil
 	default:
 		return nil, fmt.Errorf("Fail to create the provider for the given name %s", name)
 	}
