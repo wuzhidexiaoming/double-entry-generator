@@ -78,7 +78,7 @@ func (icbc *Icbc) Translate(filename string) (*ir.IR, error) {
 			// ignore the last line
 			break
 		}
-
+		fmt.Println(line)
 		err = icbc.translateToOrders(line)
 		if err != nil {
 			return nil, fmt.Errorf("Failed to translate bill: line %d: %v",
