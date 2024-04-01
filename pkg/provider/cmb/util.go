@@ -8,50 +8,46 @@ func getOrderType(ot string) OrderType {
 		return OrderTypeRecv
 	case string(OrderTypeSend):
 		return OrderTypeSend
-	case string(OrderTypeNil):
-		return OrderTypeNil
 	default:
 		return OrderTypeUnknown
 	}
 }
 
 func getTxType(tt string) TxType {
-	if strings.Contains(tt, string(TxTypeLucky)) {
-		return TxTypeLucky
+	if strings.Contains(tt, string(TxTypeSalary)) {
+		return TxTypeSalary
 	} else if strings.Contains(tt, string(TxTypeConsume)) {
 		return TxTypeConsume
 	} else if strings.Contains(tt, string(TxTypeTransfer)) {
 		return TxTypeTransfer
-	} else if strings.Contains(tt, string(TxTypeQRIncome)) {
-		return TxTypeQRIncome
-	} else if strings.Contains(tt, string(TxTypeQRSend)) {
-		return TxTypeQRSend
-	} else if strings.Contains(tt, string(TxTypeGroup)) {
-		return TxTypeGroup
+	} else if strings.Contains(tt, string(TxTypeUnionPay)) {
+		return TxTypeUnionPay
+	} else if strings.Contains(tt, string(TxTypeUnionPayOnline)) {
+		return TxTypeUnionPayOnline
+	} else if strings.Contains(tt, string(TxTypeInterest)) {
+		return TxTypeInterest
 	} else if strings.Contains(tt, string(TxTypeRefund)) {
 		return TxTypeRefund
-	} else if strings.Contains(tt, string(TxTypeCash2Cash)) {
-		return TxTypeCash2Cash
-	} else if strings.Contains(tt, string(TxTypeIntoCash)) {
-		return TxTypeIntoCash
-	} else if strings.Contains(tt, string(TxTypeCashIn)) {
-		return TxTypeCashIn
-	} else if strings.Contains(tt, string(TxTypeCashWithdraw)) {
-		return TxTypeCashWithdraw
-	} else if strings.Contains(tt, string(TxTypeCreditCardRefund)) {
-		return TxTypeCreditCardRefund
-	} else if strings.Contains(tt, string(TxTypeBuyLiCaiTong)) {
-		return TxTypeBuyLiCaiTong
-	} else if strings.Contains(tt, string(TxTypeCash2CashLooseChange)) {
-		return TxTypeCash2CashLooseChange
-	} else if strings.Contains(tt, string(TxTypeCash2Others)) {
-		return TxTypeCash2Others
-	} else if strings.Contains(tt, string(TxTypeFamilyCard)) {
-		return TxTypeFamilyCard
-	} else if strings.Contains(tt, string(TxTypeSponsorCode)) {
-		return TxTypeSponsorCode
-	} else if strings.Contains(tt, string(TxTypeOther)) {
-		return TxTypeOther
+	} else if strings.Contains(tt, string(TxTypeOnlinePayment)) {
+		return TxTypeOnlinePayment
+	} else if strings.Contains(tt, string(TxTypeOnlineRefund)) {
+		return TxTypeOnlineRefund
+	} else if strings.Contains(tt, string(TxTypeOnlinePaymentTransaction)) {
+		return TxTypeOnlinePaymentTransaction
+	} else if strings.Contains(tt, string(TxTypeNextOnlinePayment)) {
+		return TxTypeNextOnlinePayment
+	} else if strings.Contains(tt, string(TxTypeCashAdvance)) {
+		return TxTypeCashAdvance
+	} else if strings.Contains(tt, string(TxTypeRemittance)) {
+		return TxTypeRemittance
+	} else if strings.Contains(tt, string(TxTypeRedemption)) {
+		return TxTypeRedemption
+	} else if strings.Contains(tt, string(TxTypePurchase)) {
+		return TxTypePurchase
+	} else if strings.Contains(tt, string(TxTypeUnionPayQuickPayment)) {
+		return TxTypeUnionPayQuickPayment
+	} else if strings.Contains(tt, string(TxTypeCreditCardRepayment)) {
+		return TxTypeCreditCardRepayment
 	} else {
 		return TxTypeUnknown
 	}

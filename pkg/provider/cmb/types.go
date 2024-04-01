@@ -22,19 +22,14 @@ type Statistics struct {
 
 // Order is the single order.
 type Order struct {
-	OrderID        string    // 交易号
-	MechantOrderID string    // 商家订单号
-	PayTime        time.Time // 付款时间
-	Type           OrderType // 收/支
-	TypeOriginal   string
-	Peer           string  // 交易对方
-	Item           string  // 商品名称
-	Money          float64 // 金额
-	TxType         TxType  // 交易类型
-	TxTypeOriginal string
-	Status         string  // 交易状态
-	Method         string  // 支付方式
-	Commission     float64 // 服务费
+	PayDate           time.Time // 交易日期
+	PayTime           time.Time // 交易时间
+	Income            float64   // 收入
+	Expenditure       float64   // 支出
+	Balance           float64   // 余额
+	TxType            TxType    // 交易类型
+	TransactionRemark string    // 交易备注
+	Type              OrderType // 收/支 (数据中无该列，推测而来)
 }
 
 // OrderType is the type of the order.
@@ -43,30 +38,28 @@ type OrderType string
 const (
 	OrderTypeSend    OrderType = "支出"
 	OrderTypeRecv    OrderType = "收入"
-	OrderTypeNil     OrderType = "/"
 	OrderTypeUnknown OrderType = "Unknown"
 )
 
 type TxType string
 
 const (
-	TxTypeConsume              TxType = "商户消费"
-	TxTypeLucky                TxType = "微信红包"
-	TxTypeTransfer             TxType = "转账"
-	TxTypeQRIncome             TxType = "二维码收款"
-	TxTypeQRSend               TxType = "扫二维码付款"
-	TxTypeGroup                TxType = "群收款"
-	TxTypeRefund               TxType = "退款"
-	TxTypeCash2Cash            TxType = "转入零钱通-来自零钱"
-	TxTypeIntoCash             TxType = "转入零钱通"
-	TxTypeCashIn               TxType = "零钱充值"
-	TxTypeCashWithdraw         TxType = "零钱提现"
-	TxTypeCreditCardRefund     TxType = "信用卡还款"
-	TxTypeBuyLiCaiTong         TxType = "购买理财通"
-	TxTypeCash2CashLooseChange TxType = "零钱通转出-到零钱"
-	TxTypeCash2Others          TxType = "零钱通转出"
-	TxTypeFamilyCard           TxType = "亲属卡交易"
-	TxTypeSponsorCode          TxType = "赞赏码"
-	TxTypeOther                TxType = "其他"
-	TxTypeUnknown              TxType = "Unknown"
+	TxTypeSalary                   TxType = "薪资"
+	TxTypeUnionPay                 TxType = "银联代付"
+	TxTypeUnionPayOnline           TxType = "银联在线支付"
+	TxTypeTransfer                 TxType = "转账汇款"
+	TxTypeInterest                 TxType = "账户结息"
+	TxTypeOnlinePayment            TxType = "网联协议支付"
+	TxTypeOnlineRefund             TxType = "网联退款"
+	TxTypeOnlinePaymentTransaction TxType = "网联付款交易"
+	TxTypeNextOnlinePayment        TxType = "一网通支付"
+	TxTypeCashAdvance              TxType = "预借现金"
+	TxTypeConsume                  TxType = "消费"
+	TxTypeRefund                   TxType = "退款"
+	TxTypeRemittance               TxType = "汇入汇款"
+	TxTypeRedemption               TxType = "朝朝宝赎回"
+	TxTypePurchase                 TxType = "朝朝宝购买"
+	TxTypeUnionPayQuickPayment     TxType = "银联快捷支付"
+	TxTypeCreditCardRepayment      TxType = "信用卡还款"
+	TxTypeUnknown                  TxType = "未知"
 )

@@ -2,7 +2,6 @@ package cmb
 
 import (
 	"fmt"
-	"log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -29,13 +28,8 @@ func (w *Cmb) translateToOrders(array []string) error {
 		return fmt.Errorf("parse create time %s error: %v", array[0], err)
 	}
 
-	bill.TxType = getTxType(array[1])
+	bill.TxType = getTxType(array[5])
 	switch bill.TxType {
-	case TxTypeCash2Cash:
-		fallthrough
-	case TxTypeCash2CashLooseChange:
-		log.Printf("Get an unusable tx type, ignore it: %s\n", bill.TxType)
-		return nil
 	case TxTypeUnknown:
 		return fmt.Errorf("Failed to get the tx type %s: %v", array[1], err)
 	}
@@ -47,10 +41,6 @@ func (w *Cmb) translateToOrders(array []string) error {
 	if bill.Type == OrderTypeUnknown {
 		return fmt.Errorf("Failed to get the order type %s: %v", array[4], err)
 	}
-	// deal with the withdraw cash type
-	if bill.TxType == TxTypeCashWithdraw {
-		bill.Type = OrderTypeRecv
-	}
 
 	bill.Money, err = strconv.ParseFloat(array[5][2:], 64)
 	if err != nil {
@@ -60,18 +50,6 @@ func (w *Cmb) translateToOrders(array []string) error {
 	bill.Status = array[7]
 	bill.OrderID = array[8]
 	bill.MechantOrderID = array[9]
-	note := array[10]
-
-	// deal with the commission
-	if strings.Contains(note, "服务费") {
-		commissionStr := commissionRegex.FindString(note)
-		bill.Commission, err = strconv.ParseFloat(commissionStr, 64)
-		if err != nil {
-			return fmt.Errorf("parse commission %s error: %v", commissionStr, err)
-		}
-		// update money of this transaction here (exclude the commission)
-		bill.Money = bill.Money - bill.Commission
-	}
 
 	w.Orders = append(w.Orders, bill)
 	return nil
