@@ -10,6 +10,7 @@ import (
 	"github.com/deb-sig/double-entry-generator/pkg/analyser/alipay"
 	"github.com/deb-sig/double-entry-generator/pkg/analyser/htsec"
 	"github.com/deb-sig/double-entry-generator/pkg/analyser/huobi"
+	"github.com/deb-sig/double-entry-generator/pkg/analyser/jd"
 	"github.com/deb-sig/double-entry-generator/pkg/analyser/wechat"
 	"github.com/deb-sig/double-entry-generator/pkg/config"
 	"github.com/deb-sig/double-entry-generator/pkg/consts"
@@ -39,6 +40,8 @@ func New(providerName string) (Interface, error) {
 		return td.Td{}, nil
 	case consts.ProviderBmo:
 		return bmo.Bmo{}, nil
+	case consts.ProviderJd:
+		return jd.Jd{}, nil
 	default:
 		return nil, fmt.Errorf("Fail to create the analyser for the given name %s", providerName)
 	}

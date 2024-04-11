@@ -3,6 +3,7 @@ package jd
 import (
 	"encoding/csv"
 	"fmt"
+	"github.com/deb-sig/double-entry-generator/pkg/config"
 	"io"
 	"log"
 
@@ -14,6 +15,16 @@ type Jd struct {
 	Statistics Statistics `json:"statistics,omitempty"`
 	LineNum    int        `json:"line_num,omitempty"`
 	Orders     []Order    `json:"orders,omitempty"`
+}
+
+func (h *Jd) GetAllCandidateAccounts(cfg *config.Config) map[string]bool {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (h *Jd) GetAccountsAndTags(o *ir.Order, cfg *config.Config, target, provider string) (bool, string, string, map[ir.Account]string, []string) {
+	//TODO implement me
+	panic("implement me")
 }
 
 func New() *Jd {
