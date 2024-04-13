@@ -1,9 +1,8 @@
 defaultMinusAccount: Assets:FIXME
 defaultPlusAccount: Expenses:FIXME
-defaultCashAccount: Liabilities:Bank:CN:ICBC
 defaultCurrency: CNY
 title: 测试
-icbc:
+jd:
   rules:
     - peer: 财付通,支付宝
       ignore: true

@@ -1,6 +1,7 @@
 package jd
 
 import (
+	"fmt"
 	"github.com/deb-sig/double-entry-generator/pkg/config"
 	"github.com/deb-sig/double-entry-generator/pkg/ir"
 	"github.com/deb-sig/double-entry-generator/pkg/util"
@@ -12,14 +13,28 @@ type Jd struct {
 
 // GetAllCandidateAccounts returns all accounts defined in config.
 func (j Jd) GetAllCandidateAccounts(cfg *config.Config) map[string]bool {
-	// uniqMap will be used to create the concepts.
 	uniqMap := make(map[string]bool)
+	if cfg.Jd == nil || len(cfg.Jd.Rules) == 0 {
+		return uniqMap
+	}
+	for _, r := range cfg.Jd.Rules {
+		if r.MethodAccount != nil {
+			uniqMap[*r.MethodAccount] = true
+		}
+		if r.TargetAccount != nil {
+			uniqMap[*r.TargetAccount] = true
+		}
+	}
+	uniqMap[cfg.DefaultPlusAccount] = true
+	uniqMap[cfg.DefaultMinusAccount] = true
+	fmt.Print(uniqMap)
 	return uniqMap
 }
+
 func (j Jd) GetAccountsAndTags(o *ir.Order, cfg *config.Config, target, provider string) (bool, string, string, map[ir.Account]string, []string) {
 	ignore := false
 
-	if cfg.Alipay == nil || len(cfg.Alipay.Rules) == 0 {
+	if cfg.Jd == nil || len(cfg.Jd.Rules) == 0 {
 		return ignore, cfg.DefaultMinusAccount, cfg.DefaultPlusAccount, nil, nil
 	}
 	resMinus := cfg.DefaultMinusAccount
@@ -27,13 +42,10 @@ func (j Jd) GetAccountsAndTags(o *ir.Order, cfg *config.Config, target, provider
 	var extraAccounts map[ir.Account]string
 	var tags = make([]string, 0)
 
-	for _, r := range cfg.Alipay.Rules {
+	for _, r := range cfg.Jd.Rules {
 		match := true
 		// get separator
 		sep := ","
-		if r.Separator != nil {
-			sep = *r.Separator
-		}
 
 		matchFunc := util.SplitFindContains
 		if r.FullMatch {
@@ -51,9 +63,6 @@ func (j Jd) GetAccountsAndTags(o *ir.Order, cfg *config.Config, target, provider
 		}
 		if r.Method != nil {
 			match = matchFunc(*r.Method, o.Method, sep, match)
-		}
-		if r.Category != nil {
-			match = matchFunc(*r.Category, o.Category, sep, match)
 		}
 
 		if match {
@@ -78,16 +87,6 @@ func (j Jd) GetAccountsAndTags(o *ir.Order, cfg *config.Config, target, provider
 					resMinus = *r.MethodAccount
 				}
 			}
-			if r.PnlAccount != nil {
-				extraAccounts = map[ir.Account]string{
-					ir.PnlAccount: *r.PnlAccount,
-				}
-			}
-
-			if r.Tags != nil {
-				tags = strings.Split(*r.Tags, sep)
-			}
-
 		}
 	}
 

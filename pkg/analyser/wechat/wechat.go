@@ -1,6 +1,7 @@
 package wechat
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
@@ -34,6 +35,7 @@ func (w Wechat) GetAllCandidateAccounts(cfg *config.Config) map[string]bool {
 	}
 	uniqMap[cfg.DefaultPlusAccount] = true
 	uniqMap[cfg.DefaultMinusAccount] = true
+	fmt.Print(uniqMap)
 	return uniqMap
 }
 
